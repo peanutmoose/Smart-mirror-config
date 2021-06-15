@@ -1,47 +1,54 @@
 /* Magic Mirror Config Sample
  *
- * By Michael Teeuw http://michaelteeuw.nl
+ * By Michael Teeuw https://michaelteeuw.nl
  * MIT Licensed.
  *
- * For more information how you can configurate this file
+ * For more information on how you can configure this file
  * See https://github.com/MichMich/MagicMirror#configuration
  *
  */
 
-	var config = {
-	address: "localhost", // Address to listen on, can be:
-	                      // - "localhost", "127.0.0.1", "::1" to listen on loopback interface
-	                      // - another specific IPv4/6 to listen on a specific interface
-	                      // - "", "0.0.0.0", "::" to listen on any interface
-	                      // Default, when address config is left out, is "localhost"
-		 electronOptions: {
-	    webPreferences: {
-	      webviewTag: true
-	    }
-	 },
-
+var config = {
+	address: "localhost", 	// Address to listen on, can be:
+							// - "localhost", "127.0.0.1", "::1" to listen on loopback interface
+							// - another specific IPv4/6 to listen on a specific interface
+							// - "0.0.0.0", "::" to listen on any interface
+							// Default, when address config is left out or empty, is "localhost"
+	electronOptions: {
+		webPreferences: {
+			webviewTag: true
+		}
+	},
 	port: 8080,
-	
+	basePath: "/", 	// The URL path where MagicMirror is hosted. If you are using a Reverse proxy
+					// you must set the sub path here. basePath must end with a /
+	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"], 	// Set [] to allow all IP addresses
+															// or add a specific IPv4 of 192.168.1.5 :
+															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.1.5"],
+															// or IPv4 range of 192.168.3.0 --> 192.168.3.15 use CIDR format :
+															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.3.0/28"],
+
+	useHttps: false, 		// Support HTTPS or not, default "false" will use HTTP
+	httpsPrivateKey: "", 	// HTTPS private key path, only require when useHttps is true
+	httpsCertificate: "", 	// HTTPS Certificate path, only require when useHttps is true
 
 	language: "en",
+	logLevel: ["INFO", "LOG", "WARN", "ERROR"],
 	timeFormat: 24,
 	units: "metric",
 	// serverOnly:  true/false/"local" ,
-			     // local for armv6l processors, default 
-			     //   starts serveronly and then starts chrome browser
-			     // false, default for all  NON-armv6l devices
-			     // true, force serveronly mode, because you want to.. no UI on this device
-	
+	// local for armv6l processors, default
+	//   starts serveronly and then starts chrome browser
+	// false, default for all NON-armv6l devices
+	// true, force serveronly mode, because you want to.. no UI on this device
+
 	modules: [
-		{
-			module: "alert",
-		},
 		
 		{
 			module: "clock",
 			position: "top_left"
 		},
-
+		
 		{
 			module: "compliments",
 			position: "bottom_bar"
@@ -50,8 +57,8 @@
 			module: "currentweather",
 			position: "top_right",
 			config: {
-				location: "Victoria, Canada",
-				locationID: "6174041",  //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+				location: "Victoria",
+				locationID: "6174041", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
 				appid: "2665d33bd4d9876dc8f976fcb65e2600"
 			}
 		},
@@ -60,101 +67,100 @@
 			position: "top_right",
 			header: "Weather Forecast",
 			config: {
-				location: "Victoria,Canada",
-				locationID: "6174041",  //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+				location: "Victoria",
+				locationID: "6174041", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
 				appid: "2665d33bd4d9876dc8f976fcb65e2600"
 			}
 		},
-
-		{
-		  module: "MMM-Assistant2Display",
-		  position: "top_left",
-		  config: {
-		    debug:false,
-		    useYoutube: true,
-		    links: {
-		      useLinks: true,
-		      displayDelay: 60 * 1000,
-		      scrollStep: 25,
-		      scrollInterval: 1000,
-		      scrollStart: 5000,
-		      scrollActivate: false,
-		      verbose: false
-		    },
-		    photos: {
-		      usePhotos: true,
-		      displayDelay: 10 * 1000
-		    },
-		    volume: {
-		      useVolume: true,
-		      volumePreset: "ALSA",
-		      myScript: null
-		    },
-		    briefToday: {
-		      useBriefToday: true,
-		      welcome: "brief Today"
-		    },
-		   
-		    cast: {
-		      useCast: true,
-		      castName: "MagicMirror_A2D",
-		      port: 8569
-		    },
-		   
-		  }
+			
+	{
+	  module: "MMM-Assistant2Display",
+	  position: "top_left",
+	  config: {
+		debug:false,
+		useYoutube: true,
+		links: {
+		  useLinks: true,
+		  displayDelay: 60 * 1000,
+		  scrollStep: 25,
+		  scrollInterval: 1000,
+		  scrollStart: 5000,
+		  scrollActivate: false,
+		  verbose: false
 		},
-
-		{
-		  module: "MMM-GoogleAssistant",
-		  position: "fullscreen_above",
-		  config: {
-		    debug: false,
-		    assistantConfig: {
-		      lang: "en-US",
-		      projectId: "", // Required to use gaction.
-		      modelId: "", // (OPTIONAL for gaction)
-		      instanceId: "", // (OPTIONAL for gaction)
-		      latitude: 48.474979,
-		      longitude: -123.310507,
-		    },
-		    responseConfig: {
-		      useScreenOutput: true,
-		      screenOutputCSS: "screen_output.css",
-		      screenOutputTimer: 5000,
-		      activateDelay: 250,
-		      useAudioOutput: true,
-		      useChime: true,
-		      newChime: false
-		    },
-		    micConfig: { // put there configuration generated by auto-installer
-		      recorder: "arecord",
-		      device: "plughw:1",
-		    },
-		    customActionConfig: {
-		      autoMakeAction: false,
-		      autoUpdateAction: false, // in RPI, gaction CLI might have some trouble.(current version should be 2.2.4, but for linux-arm, Google haven't updated) so leave this as false in RPI. I don't know it is solved or not.
-		      actionLocale: "en-US", // At this moment, multi-languages are not supported, sorry. Someday I'll work.
-		    },
-		    snowboy: {
-		      audioGain: 2.0,
-		      Frontend: true,
-		      Model: "jarvis",
-		      Sensitivity: null
-		    }, 
+		photos: {
+		  usePhotos: true,
+		  displayDelay: 10 * 1000
+		},
+		volume: {
+		  useVolume: false,
+		  volumePreset: "ALSA",
+		  myScript: null
+		},
+		briefToday: {
+		  useBriefToday: true,
+		  welcome: "brief Today"
+		},
+		
+		cast: {
+		  useCast: true,
+		  castName: "MagicMirror_A2D",
+		  port: 8569
+		},
+	  }
+	},
+	{
+	  module: "MMM-GoogleAssistant",
+	  position: "fullscreen_above",
+	  config: {
+		debug: false,
+		assistantConfig: {
+		  lang: "en-US",
+		  projectId: "", // Required to use gaction.
+		  modelId: "", // (OPTIONAL for gaction)
+		  instanceId: "", // (OPTIONAL for gaction)
+		  latitude: 48.4329,
+		  longitude: -123.3693,
+		},
+		responseConfig: {
+		  useScreenOutput: true,
+		  screenOutputCSS: "screen_output.css",
+		  screenOutputTimer: 5000,
+		  screenRotate: false,
+		  activateDelay: 250,
+		  useAudioOutput: true,
+		  useChime: true,
+		  newChime: false,
+		  useNative: true,
+		  playProgram: "mpg123"
+		},
+		micConfig: { // put there configuration generated by auto-installer
+		  recorder: "arecord",
+		  device: "plughw:2",
+		},
+		snowboy: {
+		  usePMDL: false,
+		  audioGain: 2.0,
+		  Frontend: true,
+		  Model: "jarvis",
+		  Sensitivity: null
+		},
 		A2DServer: {
-		      useA2D: true,    
-		  },
-}  
-	
+		  useA2D: true,
+		  stopCommand: "stop",
+		  useYouTube: true,
+		  youtubeCommand: "youtube",
+		  displayResponse: true
+		},
+		recipes: [ "with-MMM-TelegramBot.js", "with-BackgroundStatus.js" ],
+		NPMCheck: {
+		  useChecker: true,
+		  delay: 10 * 60 * 1000,
+		  useAlert: true
+		}
+  }
 },
-		
-
-
-		
-		
-]		
-	
-
+	]
 };
 
 /*************** DO NOT EDIT THE LINE BELOW ***************/

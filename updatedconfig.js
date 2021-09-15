@@ -54,9 +54,9 @@
 			module: "currentweather",
 			position: "top_right",
 			config: {
-				location: "Victoria",
-				locationID: "6174041", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				appid: "2665d33bd4d9876dc8f976fcb65e2600"
+				location: "",
+				locationID: "", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+				appid: ""
 			}
 		},
 		{
@@ -64,9 +64,9 @@
 			position: "top_right",
 			header: "Weather Forecast",
 			config: {
-				location: "Victoria",
-				locationID: "6174041", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				appid: "2665d33bd4d9876dc8f976fcb65e2600"
+				location: "",
+				locationID: "", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+				appid: ""
 			}
 		},
 		{
@@ -85,8 +85,8 @@
 		    debug: false,
 		    assistantConfig: {
 		  lang: "en-US",
-		  latitude: 48.4329,
-		  longitude: -123.3693,
+		  latitude: , //add your location coordinates
+		  longitude: ,
 		},
 		 responseConfig: {
 		  useFullscreen: true,

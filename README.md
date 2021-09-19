@@ -1,3 +1,3 @@
 # Smart-mirror-config
 
-Refer to config.js file
+Refer to updatedconfig.js file

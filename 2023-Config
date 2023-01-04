@@ -1,0 +1,177 @@
+/* MagicMirror² Config Sample
+ *
+ * By Michael Teeuw https://michaelteeuw.nl
+ * MIT Licensed.
+ *
+ * For more information on how you can configure this file
+ * see https://docs.magicmirror.builders/configuration/introduction.html
+ * and https://docs.magicmirror.builders/modules/configuration.html
+ */
+  
+ var config = {
+	  address: "localhost",
+	  electronOptions: {
+		webPreferences: {
+		  webviewTag: true
+		}
+	  },
+	port: 8080,
+	basePath: "/", 	// The URL path where MagicMirror² is hosted. If you are using a Reverse proxy
+					// you must set the sub path here. basePath must end with a /
+	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"], 	// Set [] to allow all IP addresses
+															// or add a specific IPv4 of 192.168.1.5 :
+															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.1.5"],
+															// or IPv4 range of 192.168.3.0 --> 192.168.3.15 use CIDR format :
+															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.3.0/28"],
+
+	useHttps: false, 		// Support HTTPS or not, default "false" will use HTTP
+	httpsPrivateKey: "", 	// HTTPS private key path, only require when useHttps is true
+	httpsCertificate: "", 	// HTTPS Certificate path, only require when useHttps is true
+
+	language: "en",
+	locale: "en-US",
+	logLevel: ["INFO", "LOG", "WARN", "ERROR"], // Add "DEBUG" for even more logging
+	timeFormat: 24,
+	units: "metric",
+	// serverOnly:  true/false/"local" ,
+	// local for armv6l processors, default
+	//   starts serveronly and then starts chrome browser
+	// false, default for all NON-armv6l devices
+	// true, force serveronly mode, because you want to.. no UI on this device
+
+	modules: [
+		{
+			module: "clock",
+			position: "top_left"
+		},
+		{
+			module: "weather",
+			position: "top_right",
+			config: {
+			type: "current",
+			location: "Victoria",
+			locationID: "2775220", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+			apiKey: "2665d33bd4d9876dc8f976fcb65e2600"
+			}
+		},
+		{
+		  module: "MMM-GoogleAssistant",
+		  configDeepMerge: true,
+		  lang: "en-US",
+		  config: {
+			assistantConfig: {
+			  latitude: 49.2827,
+			  longitude: 123.1207,
+			},
+			recipes: [
+			  "../../EXT-YouTube/recipe/EXT-YouTube.js",
+			  "../../EXT-Spotify/recipe/EXT-Spotify.js",
+			],
+		}		
+		},
+		{
+		  module: "EXT-YouTubeCast",
+		  config: {
+			debug: false,
+			fullscreen: true,
+			width: "30vw",
+			height: "30vh",
+			alwaysDisplayed: false,
+			castName: "MagicMirror",
+			port: 8569
+		  }
+		},
+		{
+		  module: "EXT-YouTube",
+		  config: {
+			fullscreen: true,
+			width: "30vw",
+			height: "30vh",
+			useSearch: true,
+			alwaysDisplayed: false,
+			displayHeader: false,
+			username: null,
+			token: null
+		  }
+		},
+		{
+		  module: 'EXT-GooglePhotos',
+		  position: 'top_left',
+		  config: {
+			debug: false,
+			displayType: 0,
+			displayDelay: 10 * 1000,
+			displayInfos: true,
+			displayBackground: true,
+			albums: ["Food"],
+			sort: "new", // "old", "random"
+			hiResolution: true,
+			timeFormat: "DD/MM/YYYY HH:mm",
+			moduleHeight: 300,
+			moduleWidth: 300,
+			uploadAlbum: null
+		  }
+		},
+		{
+		  module: 'EXT-Spotify',
+		  position: 'top_left',
+		  config: {
+			updateInterval: 1000,
+			idleInterval: 10000,
+			useBottomBar: false,
+			CLIENT_ID: "cd36abb22a1d403590247f169479dfc2",
+			CLIENT_SECRET: "c15ec18a33f54c10a0cc34769239fe01",
+			mini: true,
+			forceSCL: true,
+			noCanvas: false
+		  }
+		},
+		{
+		  module: 'EXT-Librespot',
+		  config: {
+			debug: false,
+			email: "tiff0430@gmail.com",
+			password: "tiffany0430",
+			deviceName: "MagicMirror",
+			minVolume: 50,
+			maxVolume: 100
+		  }
+		},
+		{
+		  module: 'EXT-SpotifyCanvasLyrics'
+		},
+		{
+		  module: 'Gateway',
+		  config: {
+			debug: false,
+			port: 8081,
+			username: "admin",
+			password: "admin",
+			noLogin: false,
+			usePM2: false,
+			PM2Id: 0,
+			useMapping: false,
+			portMapping: 8081
+		  }
+		},
+		{
+		  module: 'EXT-Alert',
+		  config: {
+			debug: false,
+			ignore: []
+		  }
+		},
+		{
+		  module: "EXT-Detector",
+		  position: "top_left",
+		  configDeepMerge: true
+		},
+		{
+			module: "compliments",
+			position: "lower_third"
+		},
+	]
+};
+
+/*************** DO NOT EDIT THE LINE BELOW ***************/
+if (typeof module !== "undefined") {module.exports = config;}
